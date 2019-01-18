@@ -1,0 +1,9 @@
+D:\TestUnity\VSProjects\TestFrameSync\TestFrameSync\bin\Debug\TestFrameSync.exe
+D:\TestUnity\VSProjects\TestFrameSync\TestFrameSync\bin\Debug\TestFrameSync.pdb
+D:\TestUnity\VSProjects\TestFrameSync\TestFrameSync\obj\Debug\TestFrameSync.csprojResolveAssemblyReference.cache
+D:\TestUnity\VSProjects\TestFrameSync\TestFrameSync\obj\Debug\TestFrameSync.csproj.CoreCompileInputs.cache
+D:\TestUnity\VSProjects\TestFrameSync\TestFrameSync\obj\Debug\TestFrameSync.exe
+D:\TestUnity\VSProjects\TestFrameSync\TestFrameSync\obj\Debug\TestFrameSync.pdb
+D:\TestUnity\VSProjects\TestFrameSync\TestFrameSync\bin\Debug\TestFrameSync.exe.config
+D:\TestUnity\VSProjects\TestFrameSync\TestFrameSync\bin\Debug\Google.Protobuf.dll
+D:\TestUnity\VSProjects\TestFrameSync\TestFrameSync\obj\Debug\TestFrameSync.csproj.CopyComplete
