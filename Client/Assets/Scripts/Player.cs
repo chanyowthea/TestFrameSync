@@ -96,7 +96,7 @@ public class Player : MonoBehaviour, IPlayerAttack, IPlayerMove
 {
     IPlayerAttack _IPlayerAttack;
     IPlayerMove _IPlayerMove;
-    FixedPointF _MoveSpeed = new FixedPointF(1);
+    FixedPointF _MoveSpeed = new FixedPointF(3);
     [SerializeField] CustomTransform _PositionTf;
     [SerializeField] CustomTransform _RotationTf;
 
