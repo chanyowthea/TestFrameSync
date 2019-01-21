@@ -1,0 +1,14 @@
+syntax = "proto3";
+
+package msg;
+
+message LoginReq
+{
+	string accountName = 1;
+	string password = 2;
+}
+
+message LoginRes
+{
+	bool rs = 1;
+}
