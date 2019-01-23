@@ -5,12 +5,10 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     Player _Player;
-    CharacterController _CharacterController; 
 
     void Start()
     {
         _Player = GetComponent<Player>();
-        _CharacterController = GetComponent<CharacterController>();
         var move = new LocalPlayerMove(); 
         move.SetData(_Player.PositionTf, _Player.RotationTf, _Player.MoveSpeed);
         _Player.SetData(new LocalPlayerAttack(), move);

@@ -25,5 +25,6 @@ public class Launcher : MonoBehaviour
     void Update()
     {
         Singleton._PhysicSystem.UpdateCollider();
+        Debug.Log(Time.deltaTime);
     }
 }
