@@ -1,5 +1,5 @@
 syntax = "proto3";
-
+import "Common.proto";
 package msg;
 
 message LoginReq
@@ -11,4 +11,24 @@ message LoginReq
 message LoginRes
 {
 	bool rs = 1;
+}
+
+message MatchReq
+{
+	
+}
+
+message MatchRes
+{
+	repeated PlayerInfo playerInfos = 1;
+}
+
+message EndGameReq
+{
+	
+}
+
+message EndGameRes
+{
+	
 }

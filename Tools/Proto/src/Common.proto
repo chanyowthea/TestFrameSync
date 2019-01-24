@@ -4,7 +4,7 @@ package msg;
 
 message BaseMessage
 {
-	sint32 id = 1;
+	int32 id = 1;
 	bytes data = 2; 
 }
 
@@ -17,4 +17,11 @@ message HeartBeatReq
 message HeartBeatRes
 {
 	bool rs = 1;
+}
+
+message PlayerInfo
+{
+	int32 playerId = 1;
+	string playerName = 2;
+	int32 roleId = 3;
 }

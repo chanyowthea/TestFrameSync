@@ -15,6 +15,15 @@ namespace Proto
             2,
             3,
             4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
         };
 
       private static List<Type>_protoType = new List<Type>
@@ -22,8 +31,17 @@ namespace Proto
             typeof(BaseMessage),
             typeof(HeartBeatReq),
             typeof(HeartBeatRes),
+            typeof(PlayerInfo),
+            typeof(UDPMoveStart),
+            typeof(UDPMoveEnd),
+            typeof(UDPChangeDir),
+            typeof(UDPReleaseSkill),
             typeof(LoginReq),
             typeof(LoginRes),
+            typeof(MatchReq),
+            typeof(MatchRes),
+            typeof(EndGameReq),
+            typeof(EndGameRes),
        };
 
        private static readonly Dictionary<RuntimeTypeHandle, MessageParser> Parsers = new Dictionary<RuntimeTypeHandle, MessageParser>()
@@ -31,8 +49,17 @@ namespace Proto
             {typeof(BaseMessage).TypeHandle,BaseMessage.Parser },
             {typeof(HeartBeatReq).TypeHandle,HeartBeatReq.Parser },
             {typeof(HeartBeatRes).TypeHandle,HeartBeatRes.Parser },
+            {typeof(PlayerInfo).TypeHandle,PlayerInfo.Parser },
+            {typeof(UDPMoveStart).TypeHandle,UDPMoveStart.Parser },
+            {typeof(UDPMoveEnd).TypeHandle,UDPMoveEnd.Parser },
+            {typeof(UDPChangeDir).TypeHandle,UDPChangeDir.Parser },
+            {typeof(UDPReleaseSkill).TypeHandle,UDPReleaseSkill.Parser },
             {typeof(LoginReq).TypeHandle,LoginReq.Parser },
             {typeof(LoginRes).TypeHandle,LoginRes.Parser },
+            {typeof(MatchReq).TypeHandle,MatchReq.Parser },
+            {typeof(MatchRes).TypeHandle,MatchRes.Parser },
+            {typeof(EndGameReq).TypeHandle,EndGameReq.Parser },
+            {typeof(EndGameRes).TypeHandle,EndGameRes.Parser },
        };
 
         public static MessageParser GetMessageParser(RuntimeTypeHandle typeHandle)

@@ -97,8 +97,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Scripts\ConstValue.cs" />
-    <Compile Include="Assets\Scripts\Launcher.cs" />
+    <Compile Include="Assets\Scripts\Core\ConstValue.cs" />
+    <Compile Include="Assets\Scripts\Core\Facade.cs" />
+    <Compile Include="Assets\Scripts\Core\GameManager.cs" />
+    <Compile Include="Assets\Scripts\Core\NetworkManager.cs" />
+    <Compile Include="Assets\Scripts\Core\Singleton.cs" />
+    <Compile Include="Assets\Scripts\Game\GameService.cs" />
     <Compile Include="Assets\Scripts\Math\CustomMath.cs" />
     <Compile Include="Assets\Scripts\Math\CustomMathCos.cs" />
     <Compile Include="Assets\Scripts\Math\CustomMathSin.cs" />
@@ -106,9 +110,9 @@
     <Compile Include="Assets\Scripts\Math\CustomVector3.cs" />
     <Compile Include="Assets\Scripts\Math\FixedPointF.cs" />
     <Compile Include="Assets\Scripts\Network\Proto\Common.cs" />
+    <Compile Include="Assets\Scripts\Network\Proto\Game.cs" />
     <Compile Include="Assets\Scripts\Network\Proto\Login.cs" />
     <Compile Include="Assets\Scripts\Network\ProtoDic.cs" />
-    <Compile Include="Assets\Scripts\NetworkManager.cs" />
     <Compile Include="Assets\Scripts\Physic\CheckCollider.cs" />
     <Compile Include="Assets\Scripts\Physic\CustomCircleCollider.cs" />
     <Compile Include="Assets\Scripts\Physic\CustomCollider.cs" />
@@ -116,8 +120,8 @@
     <Compile Include="Assets\Scripts\Physic\CustomRectangleCollider.cs" />
     <Compile Include="Assets\Scripts\Physic\CustomTransform.cs" />
     <Compile Include="Assets\Scripts\Physic\PhysicalSystem.cs" />
-    <Compile Include="Assets\Scripts\Player.cs" />
-    <Compile Include="Assets\Scripts\PlayerController.cs" />
+    <Compile Include="Assets\Scripts\Player\Player.cs" />
+    <Compile Include="Assets\Scripts\Player\PlayerController.cs" />
     <Compile Include="Assets\Scripts\Plugins\Google.Protobuf\ByteArray.cs" />
     <Compile Include="Assets\Scripts\Plugins\Google.Protobuf\ByteString.cs" />
     <Compile Include="Assets\Scripts\Plugins\Google.Protobuf\CodedInputStream.cs" />
@@ -190,8 +194,8 @@
     <Compile Include="Assets\Scripts\Plugins\Google.Protobuf\WellKnownTypes\Wrappers.cs" />
     <Compile Include="Assets\Scripts\Plugins\Google.Protobuf\WellKnownTypes\WrappersPartial.cs" />
     <Compile Include="Assets\Scripts\Plugins\Google.Protobuf\WireFormat.cs" />
-    <Compile Include="Assets\Scripts\ReadOnlyAttribute.cs" />
-    <Compile Include="Assets\Scripts\Singleton.cs" />
+    <Compile Include="Assets\Scripts\UI\UILogin.cs" />
+    <Compile Include="Assets\Scripts\Util\ReadOnlyAttribute.cs" />
     <Compile Include="Assets\Test\Test.cs" />
   </ItemGroup>
   <ItemGroup>

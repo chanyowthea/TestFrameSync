@@ -9,6 +9,10 @@ using Google.Protobuf;
 using Proto;
 using System.Reflection;
 
+// LoginReq, LoginRes
+// MatchReq, MatchRes
+// UDPMoveStart, UDPMoveEnd, UDPChangeDir, EndGameReq, EndGameRes
+
 namespace TestFrameSync
 {
     class UserToken
@@ -23,7 +27,7 @@ namespace TestFrameSync
 
     class GateServer
     {
-        Dictionary<TcpClient, UserToken> _Clients = new Dictionary<TcpClient, UserToken>();
+        public Dictionary<TcpClient, UserToken> _Clients = new Dictionary<TcpClient, UserToken>();
 
         // the maximum packet is 2 m. the packet whose size is out of the maximum will not be processed. 
         TcpListener _Server;

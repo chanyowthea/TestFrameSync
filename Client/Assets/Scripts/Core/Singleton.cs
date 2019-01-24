@@ -4,13 +4,13 @@ using UnityEngine;
 
 public static class Singleton
 {
-    public static NetworkManager _NetworkManager;
+    public static GameService _GameService;
     public static PhysicalSystem _PhysicSystem;
 
     public static void Init()
     {
-        _NetworkManager = new NetworkManager();
-        _NetworkManager.Init();
+        _GameService = new GameService();
+        _GameService.Init();
         _PhysicSystem = new PhysicalSystem(); 
         _PhysicSystem.Open(); 
     }
@@ -18,7 +18,7 @@ public static class Singleton
     public static void Clear()
     {
         _PhysicSystem.Close();
-        _NetworkManager.Clear();
-        _NetworkManager = null;
+        _GameService.Clear();
+        _GameService = null;
     }
 }

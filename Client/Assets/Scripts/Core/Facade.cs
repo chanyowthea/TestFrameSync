@@ -1,15 +1,16 @@
-﻿using System.Collections;
+﻿using Msg;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Msg;
 
-public class Launcher : MonoBehaviour
+public class Facade : MonoBehaviour
 {
     void Awake()
     {
+        DontDestroyOnLoad(this);
         Singleton.Init();
         Singleton._NetworkManager.AddCallback<LoginRes>(LoginCallback);
-        Singleton._NetworkManager.Send(new LoginReq{ AccountName = "kitty"});
+        Singleton._NetworkManager.Send(new LoginReq { AccountName = "kitty" });
     }
 
     private void OnDestroy()
@@ -20,11 +21,5 @@ public class Launcher : MonoBehaviour
     void LoginCallback(LoginRes message)
     {
         Debug.Log("message.Rs=" + message.Rs);
-    }
-
-    void Update()
-    {
-        Singleton._PhysicSystem.UpdateCollider();
-        Debug.Log(Time.deltaTime);
     }
 }

@@ -1,0 +1,23 @@
+syntax = "proto3";
+
+package msg;
+
+message UDPMoveStart
+{
+	
+}
+
+message UDPMoveEnd
+{
+	
+}
+
+message UDPChangeDir
+{
+	int32 angle = 1; 
+}
+
+message UDPReleaseSkill
+{
+	int32 skillId = 1; 
+}
