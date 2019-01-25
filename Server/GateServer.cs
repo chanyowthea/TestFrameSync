@@ -17,12 +17,17 @@ namespace TestFrameSync
 {
     class UserToken
     {
-        public byte[] _Buffer;
-
+        static int _CurInternalIndex;
         public UserToken()
         {
+            _CurInternalIndex++;
             _Buffer = new byte[1024 * 1024 * 2];
+            UserId = _CurInternalIndex;
         }
+
+        public int UserId { private set; get; }
+        public byte[] _Buffer;
+        public EndPoint _IP;
     }
 
     class GateServer
@@ -55,6 +60,7 @@ namespace TestFrameSync
                 try
                 {
                     UserToken token = new UserToken();
+                    token._IP = client.Client.LocalEndPoint;
                     AddClient(client, token);
                     client.GetStream().BeginRead(token._Buffer, 0, token._Buffer.Length, ReceiveCallback, client);
                     Console.WriteLine("[INFO]client connect! ip address=" + client.Client.RemoteEndPoint);
@@ -150,6 +156,21 @@ namespace TestFrameSync
         {
             UserToken data = null;
             _Clients.TryGetValue(client, out data);
+            return data;
+        }
+
+        public UserToken GetClient(int userId)
+        {
+            UserToken data = null;
+            var e = _Clients.GetEnumerator();
+            while (e.MoveNext())
+            {
+                if (e.Current.Value.UserId == userId)
+                {
+                    data = e.Current.Value;
+                    break;
+                }
+            }
             return data;
         }
 

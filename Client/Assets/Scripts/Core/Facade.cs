@@ -5,17 +5,22 @@ using UnityEngine;
 
 public class Facade : MonoBehaviour
 {
+    public Facade Instance{ private set; get; } 
+    GateService _GateService;
     void Awake()
     {
         DontDestroyOnLoad(this);
-        Singleton.Init();
-        Singleton._NetworkManager.AddCallback<LoginRes>(LoginCallback);
-        Singleton._NetworkManager.Send(new LoginReq { AccountName = "kitty" });
+        Instance = this;
+        _GateService = new GateService(); 
+        _GateService.Init();
+        _GateService.AddCallback<LoginRes>(LoginCallback);
+        _GateService.Send(new LoginReq { AccountName = "kitty" });
     }
 
     private void OnDestroy()
     {
-        Singleton.Clear();
+        _GateService.RemoveCallback<LoginRes>(LoginCallback);
+        _GateService.Clear();
     }
 
     void LoginCallback(LoginRes message)
