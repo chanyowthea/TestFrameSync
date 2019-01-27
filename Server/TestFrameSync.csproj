@@ -50,6 +50,7 @@
     <Compile Include="GameRoom.cs" />
     <Compile Include="GameServer.cs" />
     <Compile Include="GateServer.cs" />
+    <Compile Include="LogUtil.cs" />
     <Compile Include="Network\ProtoDic.cs" />
     <Compile Include="Network\Proto\Common.cs" />
     <Compile Include="Network\Proto\Game.cs" />

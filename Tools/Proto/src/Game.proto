@@ -21,3 +21,9 @@ message UDPReleaseSkill
 {
 	int32 skillId = 1; 
 }
+
+message UDPFrameData
+{
+	int32 frameNumber = 1;
+	repeated bytes msgs = 2;
+}

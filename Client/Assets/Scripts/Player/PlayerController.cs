@@ -1,15 +1,17 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Msg;
 
 public class PlayerController : MonoBehaviour
 {
     Player _Player;
+    bool _IsMove;
 
     void Start()
     {
         _Player = GetComponent<Player>();
-        var move = new LocalPlayerMove(); 
+        var move = new LocalPlayerMove();
         move.SetData(_Player.PositionTf, _Player.RotationTf, _Player.MoveSpeed);
         _Player.SetData(new LocalPlayerAttack(), move);
     }
@@ -20,7 +22,50 @@ public class PlayerController : MonoBehaviour
         float v = Input.GetAxisRaw("Vertical");
         if (h != 0 || v != 0)
         {
-            _Player.Move(new Vector3(h, 0, v));
+            _IsMove = true;
+            if (_IsMove)
+            {
+                StartMove();
+            }
+            ChangeDir(new Vector3(h, 0, v));
+        }
+        else
+        {
+            _IsMove = false;
+            if (!_IsMove)
+            {
+                EndMove();
+            }
+        }
+    }
+
+    void StartMove()
+    {
+        GameSingleton._GameService.Send(new UDPMoveStart());
+    }
+
+    void EndMove()
+    {
+        GameSingleton._GameService.Send(new UDPMoveEnd());
+    }
+
+    void ChangeDir(Vector3 tVec2)
+    {
+        if (tVec2.x != 0)
+        {
+            int angle = (int)(Mathf.Atan2(tVec2.y, tVec2.x) * 180 / 3.14f);
+            if (Mathf.Abs(_Player.RotationTf.Angle - angle) > 5)
+            {
+                GameSingleton._GameService.Send(new UDPChangeDir{ Angle = angle});
+            }
+        }
+        else
+        {
+            int angle = tVec2.y > 0 ? 90 : -90;
+            if (Mathf.Abs(_Player.RotationTf.Angle - angle) > 5)
+            {
+                GameSingleton._GameService.Send(new UDPChangeDir { Angle = angle });
+            }
         }
     }
 }

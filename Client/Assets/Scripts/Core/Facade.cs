@@ -2,23 +2,31 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Facade : MonoBehaviour
 {
-    public Facade Instance{ private set; get; } 
-    GateService _GateService;
+    public static Facade Instance { private set; get; }
+    public GateService _GateService { private set; get; }
+
     void Awake()
     {
         DontDestroyOnLoad(this);
         Instance = this;
-        _GateService = new GateService(); 
+        _GateService = new GateService();
         _GateService.Init();
         _GateService.AddCallback<LoginRes>(LoginCallback);
-        _GateService.Send(new LoginReq { AccountName = "kitty" });
+        _GateService.AddCallback<MatchRes>(MatchCallback);
+    }
+
+    private void Start()
+    {
+        UIManager.Instance.OpenLogin();
     }
 
     private void OnDestroy()
     {
+        _GateService.RemoveCallback<MatchRes>(MatchCallback);
         _GateService.RemoveCallback<LoginRes>(LoginCallback);
         _GateService.Clear();
     }
@@ -26,5 +34,20 @@ public class Facade : MonoBehaviour
     void LoginCallback(LoginRes message)
     {
         Debug.Log("message.Rs=" + message.Rs);
+        UIManager.Instance.OpenMatch();
+    }
+
+    void MatchCallback(MatchRes message)
+    {
+        Debug.Log("message.Count=" + message.PlayerInfos.Count);
+        ChangeScene(ConstValue._PlayeScene);
+    }
+
+    public void ChangeScene(string name, bool needLoading = true)
+    {
+        if (needLoading)
+        {
+            UILoading.LoadSceneAsync(name);
+        }
     }
 }

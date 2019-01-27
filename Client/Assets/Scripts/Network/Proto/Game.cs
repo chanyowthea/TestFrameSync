@@ -24,14 +24,16 @@ namespace Msg {
           string.Concat(
             "CgpHYW1lLnByb3RvEgNtc2ciDgoMVURQTW92ZVN0YXJ0IgwKClVEUE1vdmVF",
             "bmQiHQoMVURQQ2hhbmdlRGlyEg0KBWFuZ2xlGAEgASgFIiIKD1VEUFJlbGVh",
-            "c2VTa2lsbBIPCgdza2lsbElkGAEgASgFYgZwcm90bzM="));
+            "c2VTa2lsbBIPCgdza2lsbElkGAEgASgFIjEKDFVEUEZyYW1lRGF0YRITCgtm",
+            "cmFtZU51bWJlchgBIAEoBRIMCgRtc2dzGAIgAygMYgZwcm90bzM="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(null, new pbr::GeneratedClrTypeInfo[] {
             new pbr::GeneratedClrTypeInfo(typeof(global::Msg.UDPMoveStart), global::Msg.UDPMoveStart.Parser, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Msg.UDPMoveEnd), global::Msg.UDPMoveEnd.Parser, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Msg.UDPChangeDir), global::Msg.UDPChangeDir.Parser, new[]{ "Angle" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Msg.UDPReleaseSkill), global::Msg.UDPReleaseSkill.Parser, new[]{ "SkillId" }, null, null, null)
+            new pbr::GeneratedClrTypeInfo(typeof(global::Msg.UDPReleaseSkill), global::Msg.UDPReleaseSkill.Parser, new[]{ "SkillId" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Msg.UDPFrameData), global::Msg.UDPFrameData.Parser, new[]{ "FrameNumber", "Msgs" }, null, null, null)
           }));
     }
     #endregion
@@ -442,6 +444,143 @@ namespace Msg {
             break;
           case 8: {
             SkillId = input.ReadInt32();
+            break;
+          }
+        }
+      }
+    }
+
+  }
+
+  public sealed partial class UDPFrameData : pb::IMessage<UDPFrameData> {
+    private static readonly pb::MessageParser<UDPFrameData> _parser = new pb::MessageParser<UDPFrameData>(() => new UDPFrameData());
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pb::MessageParser<UDPFrameData> Parser { get { return _parser; } }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pbr::MessageDescriptor Descriptor {
+      get { return global::Msg.GameReflection.Descriptor.MessageTypes[4]; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    pbr::MessageDescriptor pb::IMessage.Descriptor {
+      get { return Descriptor; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public UDPFrameData() {
+      OnConstruction();
+    }
+
+    partial void OnConstruction();
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public UDPFrameData(UDPFrameData other) : this() {
+      frameNumber_ = other.frameNumber_;
+      msgs_ = other.msgs_.Clone();
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public UDPFrameData Clone() {
+      return new UDPFrameData(this);
+    }
+
+    /// <summary>Field number for the "frameNumber" field.</summary>
+    public const int FrameNumberFieldNumber = 1;
+    private int frameNumber_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public int FrameNumber {
+      get { return frameNumber_; }
+      set {
+        frameNumber_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "msgs" field.</summary>
+    public const int MsgsFieldNumber = 2;
+    private static readonly pb::FieldCodec<pb::ByteString> _repeated_msgs_codec
+        = pb::FieldCodec.ForBytes(18);
+    private readonly pbc::RepeatedField<pb::ByteString> msgs_ = new pbc::RepeatedField<pb::ByteString>();
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public pbc::RepeatedField<pb::ByteString> Msgs {
+      get { return msgs_; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override bool Equals(object other) {
+      return Equals(other as UDPFrameData);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public bool Equals(UDPFrameData other) {
+      if (ReferenceEquals(other, null)) {
+        return false;
+      }
+      if (ReferenceEquals(other, this)) {
+        return true;
+      }
+      if (FrameNumber != other.FrameNumber) return false;
+      if(!msgs_.Equals(other.msgs_)) return false;
+      return true;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override int GetHashCode() {
+      int hash = 1;
+      if (FrameNumber != 0) hash ^= FrameNumber.GetHashCode();
+      hash ^= msgs_.GetHashCode();
+      return hash;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override string ToString() {
+      return pb::JsonFormatter.ToDiagnosticString(this);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void WriteTo(pb::CodedOutputStream output) {
+      if (FrameNumber != 0) {
+        output.WriteRawTag(8);
+        output.WriteInt32(FrameNumber);
+      }
+      msgs_.WriteTo(output, _repeated_msgs_codec);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public int CalculateSize() {
+      int size = 0;
+      if (FrameNumber != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeInt32Size(FrameNumber);
+      }
+      size += msgs_.CalculateSize(_repeated_msgs_codec);
+      return size;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(UDPFrameData other) {
+      if (other == null) {
+        return;
+      }
+      if (other.FrameNumber != 0) {
+        FrameNumber = other.FrameNumber;
+      }
+      msgs_.Add(other.msgs_);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(pb::CodedInputStream input) {
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            input.SkipLastField();
+            break;
+          case 8: {
+            FrameNumber = input.ReadInt32();
+            break;
+          }
+          case 18: {
+            msgs_.AddEntriesFrom(input, _repeated_msgs_codec);
             break;
           }
         }

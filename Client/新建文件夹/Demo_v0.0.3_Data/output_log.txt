@@ -1,0 +1,73 @@
+Initialize engine version: 5.6.3f1 (d3101c3b8468)
+GfxDevice: creating device client; threaded=1
+Direct3D:
+    Version:  Direct3D 11.0 [level 11.0]
+    Renderer: Intel(R) HD Graphics 5500 (ID=0x1616)
+    Vendor:   Intel
+    VRAM:     1008 MB
+    Driver:   20.19.15.4703
+Begin MonoManager ReloadAssembly
+Platform assembly: D:\_GameDesign\VSProjects\TestFrameSync\Client\新建文件夹\Demo_v0.0.3_Data\Managed\UnityEngine.dll (this message is harmless)
+Loading D:\_GameDesign\VSProjects\TestFrameSync\Client\新建文件夹\Demo_v0.0.3_Data\Managed\UnityEngine.dll into Unity Child Domain
+Platform assembly: D:\_GameDesign\VSProjects\TestFrameSync\Client\新建文件夹\Demo_v0.0.3_Data\Managed\Assembly-CSharp.dll (this message is harmless)
+Loading D:\_GameDesign\VSProjects\TestFrameSync\Client\新建文件夹\Demo_v0.0.3_Data\Managed\Assembly-CSharp.dll into Unity Child Domain
+Platform assembly: D:\_GameDesign\VSProjects\TestFrameSync\Client\新建文件夹\Demo_v0.0.3_Data\Managed\UnityEngine.UI.dll (this message is harmless)
+Loading D:\_GameDesign\VSProjects\TestFrameSync\Client\新建文件夹\Demo_v0.0.3_Data\Managed\UnityEngine.UI.dll into Unity Child Domain
+Platform assembly: D:\_GameDesign\VSProjects\TestFrameSync\Client\新建文件夹\Demo_v0.0.3_Data\Managed\UnityEngine.Networking.dll (this message is harmless)
+Loading D:\_GameDesign\VSProjects\TestFrameSync\Client\新建文件夹\Demo_v0.0.3_Data\Managed\UnityEngine.Networking.dll into Unity Child Domain
+Platform assembly: D:\_GameDesign\VSProjects\TestFrameSync\Client\新建文件夹\Demo_v0.0.3_Data\Managed\DOTween.dll (this message is harmless)
+Loading D:\_GameDesign\VSProjects\TestFrameSync\Client\新建文件夹\Demo_v0.0.3_Data\Managed\DOTween.dll into Unity Child Domain
+Platform assembly: D:\_GameDesign\VSProjects\TestFrameSync\Client\新建文件夹\Demo_v0.0.3_Data\Managed\DOTween43.dll (this message is harmless)
+Loading D:\_GameDesign\VSProjects\TestFrameSync\Client\新建文件夹\Demo_v0.0.3_Data\Managed\DOTween43.dll into Unity Child Domain
+Platform assembly: D:\_GameDesign\VSProjects\TestFrameSync\Client\新建文件夹\Demo_v0.0.3_Data\Managed\DOTween46.dll (this message is harmless)
+Loading D:\_GameDesign\VSProjects\TestFrameSync\Client\新建文件夹\Demo_v0.0.3_Data\Managed\DOTween46.dll into Unity Child Domain
+Platform assembly: D:\_GameDesign\VSProjects\TestFrameSync\Client\新建文件夹\Demo_v0.0.3_Data\Managed\DOTween50.dll (this message is harmless)
+Loading D:\_GameDesign\VSProjects\TestFrameSync\Client\新建文件夹\Demo_v0.0.3_Data\Managed\DOTween50.dll into Unity Child Domain
+- Completed reload, in  0.031 seconds
+Platform assembly: D:\_GameDesign\VSProjects\TestFrameSync\Client\新建文件夹\Demo_v0.0.3_Data\Managed\System.Core.dll (this message is harmless)
+Platform assembly: D:\_GameDesign\VSProjects\TestFrameSync\Client\新建文件夹\Demo_v0.0.3_Data\Managed\System.dll (this message is harmless)
+desktop: 1366x768 60Hz; virtual: 1366x768 at 0,0
+<RI> Initializing input.
+<RI> Input initialized.
+<RI> Initialized touch support.
+UnloadTime: 3.119217 ms
+Setting up 2 worker threads for Enlighten.
+  Thread -> id: 34f0 -> priority: 1 
+  Thread -> id: 34f4 -> priority: 1 
+message.Count=2
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+Unloading 5 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 4.582255 ms
+
+Unloading 3 unused Assets to reduce memory usage. Loaded Objects now: 418.
+Total: 0.602289 ms (FindLiveObjects: 0.044320 ms CreateObjectMapping: 0.044320 ms MarkObjects: 0.502919 ms  DeleteObjects: 0.009797 ms)
+
+Unloading 4 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 0.386286 ms
+SocketException: 通常每个套接字地址(协议/网络地址/端口)只允许使用一次。
+
+  at System.Net.Sockets.Socket.Bind (System.Net.EndPoint local_end) [0x00000] in <filename unknown>:0 
+  at System.Net.Sockets.UdpClient.InitSocket (System.Net.EndPoint localEP) [0x00000] in <filename unknown>:0 
+  at System.Net.Sockets.UdpClient..ctor (System.Net.IPEndPoint localEP) [0x00000] in <filename unknown>:0 
+  at GameService.Init () [0x00000] in <filename unknown>:0 
+  at GameSingleton.Init () [0x00000] in <filename unknown>:0 
+  at GameManager.Awake () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+
+Unloading 1 unused Assets to reduce memory usage. Loaded Objects now: 474.
+Total: 0.501052 ms (FindLiveObjects: 0.062981 ms CreateObjectMapping: 0.062514 ms MarkObjects: 0.368091 ms  DeleteObjects: 0.006064 ms)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at GameSingleton.Clear () [0x00000] in <filename unknown>:0 
+  at GameManager.OnDestroy () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+ex=The object was used after being disposed.
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+

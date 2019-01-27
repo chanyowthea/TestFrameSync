@@ -17,13 +17,12 @@ namespace TestFrameSync
         List<UserToken> _PlayerTokens = new List<UserToken>();
         UdpClient _Server;
         Thread _ReceiveThread;
-        IPEndPoint _TempServerIP = new IPEndPoint(IPAddress.Any, 8000);
-        public event Action<byte[]> _OnReceiveMsg;
+        public event Action<byte[], IPEndPoint> _OnReceiveMsg;
 
         public void Start(UserToken[] tokens)
         {
             base.Start();
-            _Server = new UdpClient(new IPEndPoint(IPAddress.Any, 8000));
+            _Server = new UdpClient(new IPEndPoint(IPAddress.Any, 8001));
             _ReceiveThread = new Thread(ReceiveThread);
             _PlayerTokens.AddRange(tokens);
         }
@@ -40,7 +39,7 @@ namespace TestFrameSync
             _Server.Close();
         }
 
-        public void Send<T>(T message)
+        public void Send<T>(T message, int userId)
             where T : IMessage
         {
             if (_Server == null)
@@ -54,7 +53,9 @@ namespace TestFrameSync
             try
             {
                 bytes = m.ToByteArray();
-                _Server.Send(bytes, bytes.Length);
+                var token = Facade.Instance.GetClient(userId);
+                Console.WriteLine("send message to token._IP=" + token.GateIP);
+                _Server.Send(bytes, bytes.Length, token.GateIP);
             }
             catch (Exception ex)
             {
@@ -62,32 +63,17 @@ namespace TestFrameSync
             }
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="bytes">这个bytes必须是客户端发来的原样数据</param>
-        /// <param name="receiveUserIds"></param>
-        public void Send(byte[] bytes, params int[] receiveUserIds)
+        public void Send<T>(T msg, params int[] receiveUserIds)
+            where T : IMessage
         {
-            if (_Server == null)
+            if (receiveUserIds == null || receiveUserIds.Length > 0)
             {
                 return;
             }
-            try
+
+            for (int i = 0, length = receiveUserIds.Length; i < length; i++)
             {
-                for (int i = 0, length = receiveUserIds.Length; i < length; i++)
-                {
-                    var token = Facade.Instance._GateServer.GetClient(receiveUserIds[i]);
-                    if (token != null)
-                    {
-                        Console.WriteLine("send message to token._IP=" + token._IP);
-                        _Server.Send(bytes, bytes.Length, token._IP as IPEndPoint);
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("ex=" + ex.Message);
+                Send(msg, receiveUserIds[i]);
             }
         }
 
@@ -97,10 +83,11 @@ namespace TestFrameSync
             {
                 try
                 {
-                    var bs = _Server.Receive(ref _TempServerIP);
+                    IPEndPoint remoteIp = new IPEndPoint(IPAddress.Any, 8001);
+                    var bs = _Server.Receive(ref remoteIp);
                     if (_OnReceiveMsg != null)
                     {
-                        _OnReceiveMsg(bs);
+                        _OnReceiveMsg(bs, remoteIp);
                     }
                     ProcessReceivedMessage(bs);
                 }

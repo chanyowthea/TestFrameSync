@@ -3,29 +3,30 @@ using System.Collections.Generic;
 using UnityEngine;
 using Msg;
 
-public class Launcher : MonoBehaviour
+public class GameManager : MonoBehaviour
 {
-    void Start()
+    void Awake()
     {
-        Singleton.Init();
-        Singleton._GameService.AddCallback<UDPMoveStart>(OnProcessMsg);
-        Singleton._GameService.AddCallback<UDPMoveEnd>(OnProcessMsg);
-        Singleton._GameService.AddCallback<UDPChangeDir>(OnProcessMsg);
-        Singleton._GameService.AddCallback<UDPReleaseSkill>(OnProcessMsg);
+        GameSingleton.Init();
+        GameSingleton._GameService.AddCallback<UDPMoveStart>(OnProcessMsg);
+        GameSingleton._GameService.AddCallback<UDPMoveEnd>(OnProcessMsg);
+        GameSingleton._GameService.AddCallback<UDPChangeDir>(OnProcessMsg);
+        GameSingleton._GameService.AddCallback<UDPReleaseSkill>(OnProcessMsg);
     }
 
     void Update()
     {
-        Singleton._PhysicSystem.UpdateCollider();
-        Debug.Log(Time.deltaTime);
+        GameSingleton._PhysicSystem.UpdateCollider();
+        //Debug.Log(Time.deltaTime);
     }
 
     void OnDestroy()
     {
-        Singleton._GameService.RemoveCallback<UDPMoveStart>(OnProcessMsg);
-        Singleton._GameService.RemoveCallback<UDPMoveEnd>(OnProcessMsg);
-        Singleton._GameService.RemoveCallback<UDPChangeDir>(OnProcessMsg);
-        Singleton._GameService.RemoveCallback<UDPReleaseSkill>(OnProcessMsg);
+        GameSingleton._GameService.RemoveCallback<UDPMoveStart>(OnProcessMsg);
+        GameSingleton._GameService.RemoveCallback<UDPMoveEnd>(OnProcessMsg);
+        GameSingleton._GameService.RemoveCallback<UDPChangeDir>(OnProcessMsg);
+        GameSingleton._GameService.RemoveCallback<UDPReleaseSkill>(OnProcessMsg);
+        GameSingleton.Clear(); 
     }
 
     void OnProcessMsg(UDPMoveStart msg)

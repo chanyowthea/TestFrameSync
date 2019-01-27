@@ -21,7 +21,11 @@ public class GateService : BaseService
         try
         {
             _TcpClient.Connect("127.0.0.1", 8000);
-            _TcpClient.GetStream().BeginRead(_Buffer, 0, _Buffer.Length, ReceiveCallback, _TcpClient);
+
+            Loom.RunAsync(() =>
+            {
+                _TcpClient.GetStream().BeginRead(_Buffer, 0, _Buffer.Length, ReceiveCallback, _TcpClient);
+            });
         }
         catch (Exception ex)
         {
@@ -51,7 +55,7 @@ public class GateService : BaseService
         m.Data = ByteString.CopyFrom(bytes);
         try
         {
-            bytes = m.ToByteArray(); 
+            bytes = m.ToByteArray();
             _TcpClient.GetStream().Write(bytes, 0, bytes.Length);
         }
         catch (Exception ex)

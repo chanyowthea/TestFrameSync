@@ -8,6 +8,7 @@ using Msg;
 using Google.Protobuf;
 using Proto;
 using System.Reflection;
+using System.Diagnostics;
 
 // LoginReq, LoginRes
 // MatchReq, MatchRes
@@ -15,24 +16,25 @@ using System.Reflection;
 
 namespace TestFrameSync
 {
-    class UserToken
+    public struct UserToken
     {
-        static int _CurInternalIndex;
-        public UserToken()
+        public UserToken(TcpClient client, IPEndPoint gameIp)
         {
-            _CurInternalIndex++;
             _Buffer = new byte[1024 * 1024 * 2];
-            UserId = _CurInternalIndex;
+            _TcpClient = client;
+            _GameIp = gameIp;
         }
 
-        public int UserId { private set; get; }
         public byte[] _Buffer;
-        public EndPoint _IP;
+        public TcpClient _TcpClient;
+        public IPEndPoint GateIP { get { return _TcpClient.Client.LocalEndPoint as IPEndPoint; } }
+        public IPEndPoint _GameIp;
     }
 
     class GateServer
     {
-        public Dictionary<TcpClient, UserToken> _Clients = new Dictionary<TcpClient, UserToken>();
+        public event Action<TcpClient> _OnDisconnect;
+        public event Action<UserToken> _OnConnect;
 
         // the maximum packet is 2 m. the packet whose size is out of the maximum will not be processed. 
         TcpListener _Server;
@@ -47,7 +49,7 @@ namespace TestFrameSync
             }
             catch (Exception ex)
             {
-                Console.WriteLine("ex=" + ex.Message);
+                Console.WriteLine("ex=" + ex.Message + LogUtil.GetStackTraceModelName());
             }
         }
 
@@ -59,22 +61,24 @@ namespace TestFrameSync
                 var client = server.EndAcceptTcpClient(result);
                 try
                 {
-                    UserToken token = new UserToken();
-                    token._IP = client.Client.LocalEndPoint;
-                    AddClient(client, token);
+                    UserToken token = new UserToken(client, null);
+                    if (_OnConnect != null)
+                    {
+                        _OnConnect(token);
+                    }
                     client.GetStream().BeginRead(token._Buffer, 0, token._Buffer.Length, ReceiveCallback, client);
                     Console.WriteLine("[INFO]client connect! ip address=" + client.Client.RemoteEndPoint);
                     server.BeginAcceptTcpClient(AcceptCallback, server);
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine("ex=" + ex.Message);
+                    Console.WriteLine("ex=" + ex.Message + LogUtil.GetStackTraceModelName());
                     Disconnect(client);
                 }
             }
             catch (Exception ex)
             {
-                Console.WriteLine("ex=" + ex.Message);
+                Console.WriteLine("ex=" + ex.Message + LogUtil.GetStackTraceModelName());
             }
         }
 
@@ -89,7 +93,7 @@ namespace TestFrameSync
                     Disconnect(client);
                     return;
                 }
-                var token = GetClient(client);
+                var token = Facade.Instance.GetClient(client);
                 if (receivedSize <= token._Buffer.Length)
                 {
                     ProcessReceivedMessage(token._Buffer.Take(receivedSize).ToArray(), client);
@@ -104,7 +108,7 @@ namespace TestFrameSync
             catch (Exception ex)
             {
                 Disconnect(client);
-                Console.WriteLine("ex=" + ex.Message);
+                Console.WriteLine("ex=" + ex.Message + LogUtil.GetStackTraceModelName());
             }
         }
 
@@ -120,7 +124,7 @@ namespace TestFrameSync
             }
             catch (Exception ex)
             {
-                Console.WriteLine("ex=" + ex.Message);
+                Console.WriteLine("ex=" + ex.Message + LogUtil.GetStackTraceModelName());
             }
             finally
             {
@@ -148,47 +152,11 @@ namespace TestFrameSync
             }
             catch (Exception ex)
             {
-                Console.WriteLine("ex=" + ex.Message);
+                Disconnect(client);
+                Console.WriteLine("ex=" + ex.Message + LogUtil.GetStackTraceModelName());
             }
         }
 
-        public UserToken GetClient(TcpClient client)
-        {
-            UserToken data = null;
-            _Clients.TryGetValue(client, out data);
-            return data;
-        }
-
-        public UserToken GetClient(int userId)
-        {
-            UserToken data = null;
-            var e = _Clients.GetEnumerator();
-            while (e.MoveNext())
-            {
-                if (e.Current.Value.UserId == userId)
-                {
-                    data = e.Current.Value;
-                    break;
-                }
-            }
-            return data;
-        }
-
-        void AddClient(TcpClient client, UserToken data)
-        {
-            if (!_Clients.ContainsKey(client))
-            {
-                _Clients.Add(client, data);
-            }
-        }
-
-        void RemoveClient(TcpClient client)
-        {
-            if (_Clients.ContainsKey(client))
-            {
-                _Clients.Remove(client);
-            }
-        }
 
         void ProcessReceivedMessage(byte[] bytes, TcpClient client)
         {
@@ -263,11 +231,9 @@ namespace TestFrameSync
 
         public void Disconnect(TcpClient client)
         {
-            if (_Clients.ContainsKey(client))
+            if (_OnDisconnect != null)
             {
-                Console.WriteLine("[INFO]client disconnect! ip address=" + client.Client.RemoteEndPoint);
-                _Clients.Remove(client);
-                client.Close();
+                _OnDisconnect(client);
             }
         }
     }

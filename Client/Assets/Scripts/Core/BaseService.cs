@@ -47,7 +47,11 @@ public class BaseService
 
             for (int i = 0, length = list.Count; i < length; i++)
             {
-                list[i](target);
+                int index = i;
+                Loom.QueueOnMainThread(() =>
+                {
+                    list[index](target);
+                });
             }
         }
     }

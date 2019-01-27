@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public static class Singleton
+public static class GameSingleton
 {
     public static GameService _GameService;
     public static PhysicalSystem _PhysicSystem;

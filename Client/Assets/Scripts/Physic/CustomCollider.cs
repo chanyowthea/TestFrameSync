@@ -37,20 +37,20 @@ public abstract class CustomCollider : MonoBehaviour
 
     public void Regist()
     {
-        if (Singleton._PhysicSystem == null)
+        if (GameSingleton._PhysicSystem == null)
         {
             return;
         }
-        Singleton._PhysicSystem.Regist(this);
+        GameSingleton._PhysicSystem.Regist(this);
     }
 
     public void UnRegist()
     {
-        if (Singleton._PhysicSystem == null)
+        if (GameSingleton._PhysicSystem == null)
         {
             return;
         }
-        Singleton._PhysicSystem.UnRegist(this);
+        GameSingleton._PhysicSystem.UnRegist(this);
     }
 
     public abstract ColliderType Type { get; }

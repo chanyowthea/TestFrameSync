@@ -17,6 +17,7 @@ namespace TestFrameSync
             Facade facade = new Facade();
             facade.Init();
             Console.ReadKey();
+            facade.Clear(); 
         }
     }
 }

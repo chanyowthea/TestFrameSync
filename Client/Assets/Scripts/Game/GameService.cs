@@ -13,11 +13,11 @@ public class GameService : BaseService
 {
     UdpClient _Client;
     Thread _ReceiveThread;
-    IPEndPoint _TempServerIP = new IPEndPoint(IPAddress.Any, 8000);
+    IPEndPoint _TempServerIP = new IPEndPoint(IPAddress.Any, 8001);
     public override void Init()
     {
         base.Init();
-        _Client = new UdpClient(new IPEndPoint(IPAddress.Any, 8000));
+        _Client = new UdpClient(new IPEndPoint(IPAddress.Any, 8001));
         _ReceiveThread = new Thread(ReceiveThread);
     }
 
