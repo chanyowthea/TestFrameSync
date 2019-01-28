@@ -5,8 +5,14 @@ using Msg;
 
 public class PlayerController : MonoBehaviour
 {
-    Player _Player;
+    public static PlayerController Instance { private set; get; }
+    public Player _Player{ private set; get; }
     bool _IsMove;
+
+    private void Awake()
+    {
+        Instance = this; 
+    }
 
     void Start()
     {

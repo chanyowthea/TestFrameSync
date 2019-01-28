@@ -4,7 +4,7 @@ using UnityEngine;
 
 public interface IPlayerMove
 {
-    void Move(Vector3 motion);
+    void Move();
 }
 
 public interface IPlayerAttack
@@ -25,14 +25,8 @@ public class LocalPlayerMove : IPlayerMove
         _MoveSpeed = speed;
     }
 
-    public void Move(Vector3 motion)
-    {
-        ChangeDir(new Vector2(motion.x, motion.z).normalized);
-        Move();
-    }
-
     // 移动罗盘只控制方向，不控制速度
-    public virtual void Move()
+    public void Move()
     {
         CustomVector3 temp;
 
@@ -44,27 +38,6 @@ public class LocalPlayerMove : IPlayerMove
         temp.z = z * _MoveSpeed * ConstValue._RenderFrameRate;
 
         _PositionTf.LocalPosition += temp;
-    }
-
-    void ChangeDir(Vector2 tVec2)
-    {
-        //发送遥感角度
-        if (tVec2.x != 0)
-        {
-            int angle = (int)(Mathf.Atan2(tVec2.y, tVec2.x) * 180 / 3.14f);
-            if (Mathf.Abs(_RotationTf.Angle - angle) > 5)
-            {
-                _RotationTf.Angle = angle;
-            }
-        }
-        else
-        {
-            int angle = tVec2.y > 0 ? 90 : -90;
-            if (Mathf.Abs(_RotationTf.Angle - angle) > 5)
-            {
-                _RotationTf.Angle = angle;
-            }
-        }
     }
 }
 
@@ -78,7 +51,7 @@ public class LocalPlayerAttack : IPlayerAttack
 
 public class NetPlayerMove : IPlayerMove
 {
-    public void Move(Vector3 motion)
+    public void Move()
     {
 
     }
@@ -94,6 +67,7 @@ public class NetPlayerAttack : IPlayerAttack
 
 public class Player : MonoBehaviour, IPlayerAttack, IPlayerMove
 {
+    public bool IsMove{ private set; get; }
     IPlayerAttack _IPlayerAttack;
     IPlayerMove _IPlayerMove;
     FixedPointF _MoveSpeed = new FixedPointF(3);
@@ -117,9 +91,32 @@ public class Player : MonoBehaviour, IPlayerAttack, IPlayerMove
         _IPlayerAttack.Attack(player);
     }
 
-    public void Move(Vector3 motion)
+    public void ChangeDir(int angle)
     {
-        _IPlayerMove.Move(motion);
+        _RotationTf.Angle = angle;
+    }
+
+    public void Move()
+    {
+        _IPlayerMove.Move();
+    }
+
+    public void StartMove()
+    {
+        IsMove = true;
+    }
+
+    public void EndMove()
+    {
+        IsMove = false;
+    }
+
+    void Update()
+    {
+        if (IsMove)
+        {
+            Move();
+        }
     }
 
     public CustomVector3 Position

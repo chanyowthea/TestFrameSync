@@ -1,4 +1,6 @@
-﻿using Msg;
+﻿using Google.Protobuf;
+using Msg;
+using Proto;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
