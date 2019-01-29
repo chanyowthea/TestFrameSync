@@ -24,6 +24,7 @@ namespace TestFrameSync
             base.Start();
             _Server = new UdpClient(new IPEndPoint(IPAddress.Any, 8001));
             _ReceiveThread = new Thread(ReceiveThread);
+            _ReceiveThread.Start();
             _PlayerTokens.AddRange(tokens);
         }
 
@@ -83,7 +84,7 @@ namespace TestFrameSync
             {
                 try
                 {
-                    IPEndPoint remoteIp = new IPEndPoint(IPAddress.Any, 8001);
+                    IPEndPoint remoteIp = new IPEndPoint(IPAddress.Any, 0);
                     var bs = _Server.Receive(ref remoteIp);
                     if (_OnReceiveMsg != null)
                     {

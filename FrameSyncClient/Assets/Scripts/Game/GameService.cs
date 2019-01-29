@@ -13,11 +13,12 @@ public class GameService : BaseService
 {
     UdpClient _Client;
     Thread _ReceiveThread;
-    IPEndPoint _TempServerIP = new IPEndPoint(IPAddress.Any, 8001);
+    IPEndPoint _TempServerIP = new IPEndPoint(IPAddress.Any, 0);
     public override void Init()
     {
         base.Init();
-        _Client = new UdpClient(new IPEndPoint(IPAddress.Any, 8001));
+        Debug.LogError("GameService.Init");
+        _Client = new UdpClient();
         _ReceiveThread = new Thread(ReceiveThread);
     }
 
@@ -45,7 +46,8 @@ public class GameService : BaseService
         try
         {
             bytes = m.ToByteArray();
-            _Client.Send(bytes, bytes.Length);
+            Debug.LogError("send message typeof(T)=" + typeof(T));
+            _Client.Send(bytes, bytes.Length, new IPEndPoint(IPAddress.Parse("127.0.0.1"), 8001));
         }
         catch (Exception ex)
         {

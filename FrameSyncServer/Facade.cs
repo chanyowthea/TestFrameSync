@@ -126,7 +126,7 @@ namespace TestFrameSync
             _GateServer.Send(new LoginRes { Rs = true }, client);
 
             // TODO 目前只能是两个人进行测试
-            if (_GatePlayerInfos.Count >= 2)
+            if (_GatePlayerInfos.Count >= 1)
             {
                 Console.WriteLine("match successfully! ");
 
@@ -162,7 +162,13 @@ namespace TestFrameSync
         void StartGameServer()
         {
             _GameServer = new GameServer();
-            _GameServer.Start();
+            var tokens = new List<UserToken>();
+            var e = _GatePlayerInfos.GetEnumerator();
+            while (e.MoveNext())
+            {
+                tokens.Add(e.Current.Value._UserToken); 
+            }
+            _GameServer.Start(tokens.ToArray());
         }
 
         void StopGameServer()

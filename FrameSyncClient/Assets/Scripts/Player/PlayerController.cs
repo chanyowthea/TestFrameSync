@@ -28,20 +28,20 @@ public class PlayerController : MonoBehaviour
         float v = Input.GetAxisRaw("Vertical");
         if (h != 0 || v != 0)
         {
-            _IsMove = true;
-            if (_IsMove)
+            if (!_IsMove)
             {
                 StartMove();
             }
+            _IsMove = true;
             ChangeDir(new Vector3(h, 0, v));
         }
         else
         {
-            _IsMove = false;
-            if (!_IsMove)
+            if (_IsMove)
             {
                 EndMove();
             }
+            _IsMove = false;
         }
     }
 
