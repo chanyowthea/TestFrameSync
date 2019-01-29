@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FrameSyncClient", "FrameSyncClient.csproj", "{A23D936D-15AD-3385-5117-F53DAE483774}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FrameSyncClient.Editor", "FrameSyncClient.Editor.csproj", "{8A600834-2A07-B8B2-66E2-3F631ABA5428}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A23D936D-15AD-3385-5117-F53DAE483774}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A23D936D-15AD-3385-5117-F53DAE483774}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A23D936D-15AD-3385-5117-F53DAE483774}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A23D936D-15AD-3385-5117-F53DAE483774}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8A600834-2A07-B8B2-66E2-3F631ABA5428}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8A600834-2A07-B8B2-66E2-3F631ABA5428}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8A600834-2A07-B8B2-66E2-3F631ABA5428}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8A600834-2A07-B8B2-66E2-3F631ABA5428}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
