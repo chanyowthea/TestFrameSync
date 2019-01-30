@@ -67,6 +67,7 @@ public class NetPlayerAttack : IPlayerAttack
 
 public class Player : MonoBehaviour, IPlayerAttack, IPlayerMove
 {
+    int _UserId; 
     public bool IsMove{ private set; get; }
     IPlayerAttack _IPlayerAttack;
     IPlayerMove _IPlayerMove;
@@ -74,10 +75,11 @@ public class Player : MonoBehaviour, IPlayerAttack, IPlayerMove
     [SerializeField] CustomTransform _PositionTf;
     [SerializeField] CustomTransform _RotationTf;
 
-    public void SetData(IPlayerAttack playerAttack, IPlayerMove playerMove)
+    public void SetData(IPlayerAttack playerAttack, IPlayerMove playerMove, int userId)
     {
         _IPlayerAttack = playerAttack;
         _IPlayerMove = playerMove;
+        _UserId = userId; 
     }
 
     public void ClearData()

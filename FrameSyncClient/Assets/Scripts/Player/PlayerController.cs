@@ -19,7 +19,7 @@ public class PlayerController : MonoBehaviour
         _Player = GetComponent<Player>();
         var move = new LocalPlayerMove();
         move.SetData(_Player.PositionTf, _Player.RotationTf, _Player.MoveSpeed);
-        _Player.SetData(new LocalPlayerAttack(), move);
+        _Player.SetData(new LocalPlayerAttack(), move, Facade.Instance.LocalPlayerUserId);
     }
 
     void Update()

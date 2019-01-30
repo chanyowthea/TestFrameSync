@@ -25,7 +25,8 @@ namespace Msg {
             "CgpHYW1lLnByb3RvEgNtc2ciDgoMVURQTW92ZVN0YXJ0IgwKClVEUE1vdmVF",
             "bmQiHQoMVURQQ2hhbmdlRGlyEg0KBWFuZ2xlGAEgASgFIiIKD1VEUFJlbGVh",
             "c2VTa2lsbBIPCgdza2lsbElkGAEgASgFIjEKDFVEUEZyYW1lRGF0YRITCgtm",
-            "cmFtZU51bWJlchgBIAEoBRIMCgRtc2dzGAIgAygMYgZwcm90bzM="));
+            "cmFtZU51bWJlchgBIAEoBRIMCgRtc2dzGAIgAygMIh4KDFVEUEdhbWVTdGFy",
+            "dBIOCgZ1c2VySWQYASABKAViBnByb3RvMw=="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(null, new pbr::GeneratedClrTypeInfo[] {
@@ -33,7 +34,8 @@ namespace Msg {
             new pbr::GeneratedClrTypeInfo(typeof(global::Msg.UDPMoveEnd), global::Msg.UDPMoveEnd.Parser, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Msg.UDPChangeDir), global::Msg.UDPChangeDir.Parser, new[]{ "Angle" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Msg.UDPReleaseSkill), global::Msg.UDPReleaseSkill.Parser, new[]{ "SkillId" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Msg.UDPFrameData), global::Msg.UDPFrameData.Parser, new[]{ "FrameNumber", "Msgs" }, null, null, null)
+            new pbr::GeneratedClrTypeInfo(typeof(global::Msg.UDPFrameData), global::Msg.UDPFrameData.Parser, new[]{ "FrameNumber", "Msgs" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Msg.UDPGameStart), global::Msg.UDPGameStart.Parser, new[]{ "UserId" }, null, null, null)
           }));
     }
     #endregion
@@ -581,6 +583,123 @@ namespace Msg {
           }
           case 18: {
             msgs_.AddEntriesFrom(input, _repeated_msgs_codec);
+            break;
+          }
+        }
+      }
+    }
+
+  }
+
+  public sealed partial class UDPGameStart : pb::IMessage<UDPGameStart> {
+    private static readonly pb::MessageParser<UDPGameStart> _parser = new pb::MessageParser<UDPGameStart>(() => new UDPGameStart());
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pb::MessageParser<UDPGameStart> Parser { get { return _parser; } }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pbr::MessageDescriptor Descriptor {
+      get { return global::Msg.GameReflection.Descriptor.MessageTypes[5]; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    pbr::MessageDescriptor pb::IMessage.Descriptor {
+      get { return Descriptor; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public UDPGameStart() {
+      OnConstruction();
+    }
+
+    partial void OnConstruction();
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public UDPGameStart(UDPGameStart other) : this() {
+      userId_ = other.userId_;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public UDPGameStart Clone() {
+      return new UDPGameStart(this);
+    }
+
+    /// <summary>Field number for the "userId" field.</summary>
+    public const int UserIdFieldNumber = 1;
+    private int userId_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public int UserId {
+      get { return userId_; }
+      set {
+        userId_ = value;
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override bool Equals(object other) {
+      return Equals(other as UDPGameStart);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public bool Equals(UDPGameStart other) {
+      if (ReferenceEquals(other, null)) {
+        return false;
+      }
+      if (ReferenceEquals(other, this)) {
+        return true;
+      }
+      if (UserId != other.UserId) return false;
+      return true;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override int GetHashCode() {
+      int hash = 1;
+      if (UserId != 0) hash ^= UserId.GetHashCode();
+      return hash;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override string ToString() {
+      return pb::JsonFormatter.ToDiagnosticString(this);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void WriteTo(pb::CodedOutputStream output) {
+      if (UserId != 0) {
+        output.WriteRawTag(8);
+        output.WriteInt32(UserId);
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public int CalculateSize() {
+      int size = 0;
+      if (UserId != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeInt32Size(UserId);
+      }
+      return size;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(UDPGameStart other) {
+      if (other == null) {
+        return;
+      }
+      if (other.UserId != 0) {
+        UserId = other.UserId;
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(pb::CodedInputStream input) {
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            input.SkipLastField();
+            break;
+          case 8: {
+            UserId = input.ReadInt32();
             break;
           }
         }

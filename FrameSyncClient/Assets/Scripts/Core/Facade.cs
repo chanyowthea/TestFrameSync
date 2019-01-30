@@ -10,6 +10,7 @@ public class Facade : MonoBehaviour
 {
     public static Facade Instance { private set; get; }
     public GateService _GateService { private set; get; }
+    public int LocalPlayerUserId{private set; get; }
 
     void Awake()
     {
@@ -36,6 +37,7 @@ public class Facade : MonoBehaviour
     void LoginCallback(LoginRes message)
     {
         Debug.Log("message.Rs=" + message.Rs);
+        LocalPlayerUserId = message.UserId; 
         UIManager.Instance.OpenMatch();
     }
 

@@ -1,4 +1,6 @@
-﻿using Msg;
+﻿using Google.Protobuf;
+using Msg;
+using Proto;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -66,26 +68,60 @@ namespace TestFrameSync
         void OnDisconnect(TcpClient client)
         {
             var e = _GatePlayerInfos.GetEnumerator();
-            int userId = 0;
             while (e.MoveNext())
             {
                 if (e.Current.Value._UserToken._TcpClient == client)
                 {
-                    client.Close(); 
+                    client.Close();
                     _GatePlayerInfos.Remove(e.Current.Value.UserId);
-                    break; 
+                    break;
                 }
             }
         }
 
         void OnReceivedGameMsg(byte[] msg, IPEndPoint ip)
         {
+            // parse to base message. 
+            var message = BaseMessage.Parser.ParseFrom(msg);
+
+            // get target message info. 
+            var type = ProtoDic.GetProtoTypeByProtoId(message.Id);
+            if (type == typeof(UDPGameStart))
+            {
+                MessageParser messageParser = ProtoDic.GetMessageParser(type.TypeHandle);
+                // convert to target message object. 
+                UDPGameStart target = messageParser.ParseFrom(message.Data) as UDPGameStart;
+                if (target != null)
+                {
+                    if (_GatePlayerInfos.ContainsKey(target.UserId))
+                    {
+                        var info = _GatePlayerInfos[target.UserId];
+                        info._UserToken._GameIp = ip;
+                        _GatePlayerInfos[target.UserId] = info; 
+                    }
+
+                    for (int i = 0, length = _GameRooms.Count; i < length; i++)
+                    {
+                        var room = _GameRooms[i];
+                        for (int j = 0, max = room._UserIds.Length; j < max; j++)
+                        {
+                            if (room._UserIds[j] == target.UserId)
+                            {
+                                room.PlayerReady(target.UserId, ip);
+                                return;
+                            }
+                        }
+                    }
+                }
+                return;
+            }
+
+            int userId = 0;
             // find client
             var e = _GatePlayerInfos.GetEnumerator();
-            int userId = 0;
             while (e.MoveNext())
             {
-                if (e.Current.Value._UserToken._GameIp == ip)
+                if (e.Current.Value._UserToken._GameIp.ToString() == ip.ToString())
                 {
                     userId = e.Current.Value.UserId;
                 }
@@ -100,7 +136,7 @@ namespace TestFrameSync
                         if (room._UserIds[j] == userId)
                         {
                             room.Receive(msg);
-                            return; 
+                            return;
                         }
                     }
                 }
@@ -122,8 +158,17 @@ namespace TestFrameSync
 
         void LoginReqCallback(LoginReq message, TcpClient client)
         {
+            int userId = 0;
+            var e0 = _GatePlayerInfos.GetEnumerator();
+            while (e0.MoveNext())
+            {
+                if (e0.Current.Value._UserToken._TcpClient == client)
+                {
+                    userId = e0.Current.Value.UserId;
+                }
+            }
             Console.WriteLine("login req name=" + message.AccountName);
-            _GateServer.Send(new LoginRes { Rs = true }, client);
+            _GateServer.Send(new LoginRes { Rs = userId != 0, UserId = userId }, client);
 
             // TODO 目前只能是两个人进行测试
             if (_GatePlayerInfos.Count >= 1)
@@ -147,6 +192,7 @@ namespace TestFrameSync
                 // create room
                 var room = new GameRoom();
                 room.Init(userIds.ToArray());
+                _GameRooms.Add(room);
 
                 // send match info
                 var matchRes = new MatchRes();
@@ -166,7 +212,7 @@ namespace TestFrameSync
             var e = _GatePlayerInfos.GetEnumerator();
             while (e.MoveNext())
             {
-                tokens.Add(e.Current.Value._UserToken); 
+                tokens.Add(e.Current.Value._UserToken);
             }
             _GameServer.Start(tokens.ToArray());
         }

@@ -23,6 +23,7 @@ public class GameManager : MonoBehaviour
         GameSingleton._GameService.AddCallback<UDPChangeDir>(OnProcessMsg);
         GameSingleton._GameService.AddCallback<UDPReleaseSkill>(OnProcessMsg);
         GameSingleton._GameService.AddCallback<UDPFrameData>(OnProcessMsg);
+        GameSingleton._GameService.Send(new UDPGameStart{ UserId = Facade.Instance.LocalPlayerUserId});
     }
 
     void Update()
@@ -94,6 +95,7 @@ public class GameManager : MonoBehaviour
 
     void OnProcessMsg(UDPFrameData message)
     {
+        Debug.LogError("OnProcessMsg(UDPFrameData message) frame number=" + message.FrameNumber);
         if (_FrameMessages.Count > 0)
         {
             int lastFrame = _FrameMessages.ElementAt(_FrameMessages.Count - 1).Value.FrameNumber;

@@ -20,6 +20,7 @@ public class GameService : BaseService
         Debug.LogError("GameService.Init");
         _Client = new UdpClient();
         _ReceiveThread = new Thread(ReceiveThread);
+        Loom.RunAsync(_ReceiveThread.Start);
     }
 
     public override void Clear()

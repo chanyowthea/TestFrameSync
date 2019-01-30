@@ -11,6 +11,7 @@ message LoginReq
 message LoginRes
 {
 	bool rs = 1;
+	int32 userId = 2;
 }
 
 message MatchReq

@@ -23,15 +23,15 @@ namespace Msg {
       byte[] descriptorData = global::System.Convert.FromBase64String(
           string.Concat(
             "CgtMb2dpbi5wcm90bxIDbXNnGgxDb21tb24ucHJvdG8iMQoITG9naW5SZXES",
-            "EwoLYWNjb3VudE5hbWUYASABKAkSEAoIcGFzc3dvcmQYAiABKAkiFgoITG9n",
-            "aW5SZXMSCgoCcnMYASABKAgiCgoITWF0Y2hSZXEiMAoITWF0Y2hSZXMSJAoL",
-            "cGxheWVySW5mb3MYASADKAsyDy5tc2cuUGxheWVySW5mbyIMCgpFbmRHYW1l",
-            "UmVxIgwKCkVuZEdhbWVSZXNiBnByb3RvMw=="));
+            "EwoLYWNjb3VudE5hbWUYASABKAkSEAoIcGFzc3dvcmQYAiABKAkiJgoITG9n",
+            "aW5SZXMSCgoCcnMYASABKAgSDgoGdXNlcklkGAIgASgFIgoKCE1hdGNoUmVx",
+            "IjAKCE1hdGNoUmVzEiQKC3BsYXllckluZm9zGAEgAygLMg8ubXNnLlBsYXll",
+            "ckluZm8iDAoKRW5kR2FtZVJlcSIMCgpFbmRHYW1lUmVzYgZwcm90bzM="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { global::Msg.CommonReflection.Descriptor, },
           new pbr::GeneratedClrTypeInfo(null, new pbr::GeneratedClrTypeInfo[] {
             new pbr::GeneratedClrTypeInfo(typeof(global::Msg.LoginReq), global::Msg.LoginReq.Parser, new[]{ "AccountName", "Password" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Msg.LoginRes), global::Msg.LoginRes.Parser, new[]{ "Rs" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Msg.LoginRes), global::Msg.LoginRes.Parser, new[]{ "Rs", "UserId" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Msg.MatchReq), global::Msg.MatchReq.Parser, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Msg.MatchRes), global::Msg.MatchRes.Parser, new[]{ "PlayerInfos" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Msg.EndGameReq), global::Msg.EndGameReq.Parser, null, null, null, null),
@@ -212,6 +212,7 @@ namespace Msg {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public LoginRes(LoginRes other) : this() {
       rs_ = other.rs_;
+      userId_ = other.userId_;
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -230,6 +231,17 @@ namespace Msg {
       }
     }
 
+    /// <summary>Field number for the "userId" field.</summary>
+    public const int UserIdFieldNumber = 2;
+    private int userId_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public int UserId {
+      get { return userId_; }
+      set {
+        userId_ = value;
+      }
+    }
+
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public override bool Equals(object other) {
       return Equals(other as LoginRes);
@@ -244,6 +256,7 @@ namespace Msg {
         return true;
       }
       if (Rs != other.Rs) return false;
+      if (UserId != other.UserId) return false;
       return true;
     }
 
@@ -251,6 +264,7 @@ namespace Msg {
     public override int GetHashCode() {
       int hash = 1;
       if (Rs != false) hash ^= Rs.GetHashCode();
+      if (UserId != 0) hash ^= UserId.GetHashCode();
       return hash;
     }
 
@@ -265,6 +279,10 @@ namespace Msg {
         output.WriteRawTag(8);
         output.WriteBool(Rs);
       }
+      if (UserId != 0) {
+        output.WriteRawTag(16);
+        output.WriteInt32(UserId);
+      }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -272,6 +290,9 @@ namespace Msg {
       int size = 0;
       if (Rs != false) {
         size += 1 + 1;
+      }
+      if (UserId != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeInt32Size(UserId);
       }
       return size;
     }
@@ -283,6 +304,9 @@ namespace Msg {
       }
       if (other.Rs != false) {
         Rs = other.Rs;
+      }
+      if (other.UserId != 0) {
+        UserId = other.UserId;
       }
     }
 
@@ -296,6 +320,10 @@ namespace Msg {
             break;
           case 8: {
             Rs = input.ReadBool();
+            break;
+          }
+          case 16: {
+            UserId = input.ReadInt32();
             break;
           }
         }

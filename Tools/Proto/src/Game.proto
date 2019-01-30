@@ -27,3 +27,8 @@ message UDPFrameData
 	int32 frameNumber = 1;
 	repeated bytes msgs = 2;
 }
+
+message UDPGameStart
+{
+	int32 userId = 1;
+}

@@ -55,8 +55,8 @@ namespace TestFrameSync
             {
                 bytes = m.ToByteArray();
                 var token = Facade.Instance.GetClient(userId);
-                Console.WriteLine("send message to token._IP=" + token.GateIP);
-                _Server.Send(bytes, bytes.Length, token.GateIP);
+                Console.WriteLine("send message to token._IP=" + token._GameIp);
+                _Server.Send(bytes, bytes.Length, token._GameIp);
             }
             catch (Exception ex)
             {
@@ -67,7 +67,7 @@ namespace TestFrameSync
         public void Send<T>(T msg, params int[] receiveUserIds)
             where T : IMessage
         {
-            if (receiveUserIds == null || receiveUserIds.Length > 0)
+            if (receiveUserIds == null || receiveUserIds.Length == 0)
             {
                 return;
             }
@@ -90,7 +90,7 @@ namespace TestFrameSync
                     {
                         _OnReceiveMsg(bs, remoteIp);
                     }
-                    ProcessReceivedMessage(bs);
+                    //ProcessReceivedMessage(bs);
                 }
                 catch (Exception ex)
                 {

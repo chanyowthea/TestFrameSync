@@ -25,6 +25,7 @@ namespace Proto
             12,
             13,
             14,
+            15,
         };
 
       private static List<Type>_protoType = new List<Type>
@@ -38,6 +39,7 @@ namespace Proto
             typeof(UDPChangeDir),
             typeof(UDPReleaseSkill),
             typeof(UDPFrameData),
+            typeof(UDPGameStart),
             typeof(LoginReq),
             typeof(LoginRes),
             typeof(MatchReq),
@@ -57,6 +59,7 @@ namespace Proto
             {typeof(UDPChangeDir).TypeHandle,UDPChangeDir.Parser },
             {typeof(UDPReleaseSkill).TypeHandle,UDPReleaseSkill.Parser },
             {typeof(UDPFrameData).TypeHandle,UDPFrameData.Parser },
+            {typeof(UDPGameStart).TypeHandle,UDPGameStart.Parser },
             {typeof(LoginReq).TypeHandle,LoginReq.Parser },
             {typeof(LoginRes).TypeHandle,LoginRes.Parser },
             {typeof(MatchReq).TypeHandle,MatchReq.Parser },
