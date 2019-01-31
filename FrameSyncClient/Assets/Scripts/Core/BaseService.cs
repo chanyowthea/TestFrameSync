@@ -63,7 +63,7 @@ public class BaseService
         else return new Action<object>(obj => tAction((T)obj));
     }
 
-    Dictionary<Type, List<Action<object>>> _MessageCallbacks = new Dictionary<Type, List<Action<object>>>();
+    protected Dictionary<Type, List<Action<object>>> _MessageCallbacks = new Dictionary<Type, List<Action<object>>>();
 
     public void AddCallback<T>(Action<T> callback)
         where T : IMessage

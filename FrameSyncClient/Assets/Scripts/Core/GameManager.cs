@@ -23,7 +23,7 @@ public class GameManager : MonoBehaviour
         GameSingleton._GameService.AddCallback<UDPChangeDir>(OnProcessMsg);
         GameSingleton._GameService.AddCallback<UDPReleaseSkill>(OnProcessMsg);
         GameSingleton._GameService.AddCallback<UDPFrameData>(OnProcessMsg);
-        GameSingleton._GameService.Send(new UDPGameStart{ UserId = Facade.Instance.LocalPlayerUserId});
+        GameSingleton._GameService.Send(new UDPGameStart { UserId = Facade.Instance.LocalPlayerUserId });
     }
 
     void Update()
@@ -33,7 +33,7 @@ public class GameManager : MonoBehaviour
             _LapsedTime += Time.deltaTime;
             return;
         }
-        _LapsedTime = 0; 
+        _LapsedTime = 0;
         FrameForward();
     }
 
@@ -49,6 +49,7 @@ public class GameManager : MonoBehaviour
 
     void FrameForward()
     {
+        //Debug.Log("FrameForward");
         int lastestFrameNumber = 0;
         if (_FrameMessages.Count > 0)
         {
@@ -61,6 +62,7 @@ public class GameManager : MonoBehaviour
         }
         for (int k = 0; k < Mathf.Clamp(gap, 1, _MaxForwardTimePerFrame); k++)
         {
+            //Debug.Log("k=" + k);
             if (_CurSmoothFrame == 0)
             {
                 if (_FrameMessages.Count == 0)
@@ -70,7 +72,7 @@ public class GameManager : MonoBehaviour
 
                 var message = _FrameMessages.ElementAt(0).Value;
                 _FrameMessages.Remove(message.FrameNumber);
-                Debug.Log("FrameNumber=" + message.FrameNumber);
+                //Debug.Log("FrameNumber=" + message.FrameNumber);
                 for (int i = 0, length = message.Msgs.Count; i < length; i++)
                 {
                     GameSingleton._GameService.ProcessReceivedMessage(message.Msgs[i].ToByteArray());
@@ -95,17 +97,19 @@ public class GameManager : MonoBehaviour
 
     void OnProcessMsg(UDPFrameData message)
     {
-        Debug.LogError("OnProcessMsg(UDPFrameData message) frame number=" + message.FrameNumber);
+        //Debug.LogError("OnProcessMsg(UDPFrameData message) frame number=" + message.FrameNumber);
         if (_FrameMessages.Count > 0)
         {
             int lastFrame = _FrameMessages.ElementAt(_FrameMessages.Count - 1).Value.FrameNumber;
-            if (message.FrameNumber > lastFrame + 1)
-            {
-                // supply frame
-                _PartialFrameMessages.Add(message.FrameNumber, message);
-                // request frame [lastFrame+1, message.FrameNumber-1]
-            }
-            else if (message.FrameNumber == lastFrame + 1)
+            //Debug.LogError("lastFrame=" + lastFrame + ", message.FrameNumber=" + message.FrameNumber);
+            if (message.FrameNumber >= lastFrame + 1)
+            //if (message.FrameNumber > lastFrame + 1)
+            //{
+            //    // supply frame
+            //    _PartialFrameMessages.Add(message.FrameNumber, message);
+            //    // request frame [lastFrame+1, message.FrameNumber-1]
+            //}
+            //else if (message.FrameNumber == lastFrame + 1)
             {
                 _FrameMessages.Add(message.FrameNumber, message);
             }
@@ -118,6 +122,18 @@ public class GameManager : MonoBehaviour
                 {
                     _FrameMessages[message.FrameNumber] = message;
                 }
+            }
+        }
+        else
+        {
+            if (message.FrameNumber >= CurGameFrame + 1)
+            //if (message.FrameNumber > CurGameFrame + 1)
+            //{
+                //_PartialFrameMessages.Add(message.FrameNumber, message);
+            //}
+            //else if (message.FrameNumber == CurGameFrame + 1)
+            {
+                _FrameMessages.Add(message.FrameNumber, message);
             }
         }
     }
@@ -134,6 +150,7 @@ public class GameManager : MonoBehaviour
 
     void OnProcessMsg(UDPChangeDir msg)
     {
+        Debug.Log("OnProcessMsg(UDPChangeDir msg)=" + msg.Angle);
         PlayerController.Instance._Player.ChangeDir(msg.Angle);
     }
 
